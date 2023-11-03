@@ -2,19 +2,56 @@
     <h1>Formulario de Contacto</h1>
     <div id="contendedor-formulario">
 
-        <form id="formulario">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <textarea id="mensaje" placeholder="Mensaje" required></textarea>
+        <form id="formulario" @submit="validateForm">
+            <input type="text" name="nombre" placeholder="Nombre" v-model="nombre">
+            <input type="email" name="email" placeholder="Email" v-model="email">
+            <textarea v-model="mensaje" name="mensaje" placeholder="Mensaje"></textarea>
             <button id="btn-enviar" type="submit" class="btn">Enviar <i class="fa-regular fa-envelope"></i></button>
         </form>
     </div>
+    <ul>
+        <h5> Recursos utilizados: </h5>
+        <li> <a href="https://es.vuejs.org/v2/cookbook/form-validation"> https://es.vuejs.org/v2/cookbook/form-validation </a></li>
+        <li><a href="https://areimilla.cl/site/blog-post/validacion-de-un-formulario-con-vue-js/"> https://areimilla.cl/site/blog-post/validacion-de-un-formulario-con-vue-js/ </a></li>
+    </ul>
 </template>
 
 <script>
  export default {
-      name: 'ContactForm',
-    }
+    name: 'ContactForm',
+    data() {
+        return {
+            formData: {
+                nombre: null,
+                email: null,
+                mensaje: null
+            }
+        }
+    },
+
+    methods:{
+        validateForm: function(e){
+            if(!this.nombre){
+                alert("Debes agregar el nombre.");
+                e.preventDefault();
+            }
+
+            if (!this.email) {
+                alert('Debes agregar un correo electrónico.');
+            }
+            
+            if(!this.mensaje){
+                alert("Debes agregar un mensaje.");
+            e.preventDefault();
+            }
+
+            if(this.mensaje && this.mensaje.length <5){
+                alert("El mensaje contener más de 5 caracteres.");
+            e.preventDefault();
+            }
+        }
+        }
+ }
 </script>
 
 <style>
@@ -54,5 +91,9 @@ input, textarea {
 
 #btn-enviar:hover{
   background-color:rgb(0, 104, 224);
+}
+
+li{
+    list-style: none;
 }
 </style>
